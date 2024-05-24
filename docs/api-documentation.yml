@@ -1,0 +1,256 @@
+openapi: 3.0.0
+components:
+  schemas:
+    UserDataResponse:
+      title: Users Data Get - Success Response
+      type: object
+      properties:
+        success:
+          type: "boolean"
+          description: "Estado de la petición"
+          example: "true"
+        message:
+          type: "string"
+          description: "Mensaje de respuesta"
+          example: "Datos obtenidos correctamente."
+        data:
+          type: "object"
+          properties:
+            result:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "ID de usuario"
+                    example: "d65b7381-59a2-4b2a-ae79-66c90c6ab2c8"
+                  name:
+                    type: string
+                    description: "Nombre"
+                    example: "Juanito"
+                  last:
+                    type: string
+                    description: "Apellido"
+                    example: "Perez"
+
+    UsersDatatBadRequestResponse:
+      title: Bad Response Get Users
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: "Estado de la petición"
+          example: "false"
+        message:
+          type: string
+          description: "Mensaje del error"
+          example: "Error al obtener usuarios"
+
+
+    UserCreateDataRequestBody:
+      title: Create User - Request body
+      type: object
+      required:
+        - name
+        - last
+      properties:
+        name:
+          type: string
+          description: "Nombre"
+          example: "Juanito"
+        last:
+          type: string
+          description: "Apellido"
+          example: "Perez"
+
+
+    UserCreateDataResponse:
+      title: Response Create User - Success Response
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: "Estado de la petición"
+          example: "true"
+        message:
+          type: string
+          description: "Mensaje"
+          example: "Usuario creado exitosamente"
+
+
+    UserCreateBadRequestResponse:
+      title: Bad Response Post
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: "Estado de la petición"
+          example: "false"
+        message:
+          type: string
+          description: "Mensaje del error"
+          example: "Error al crear usuario"
+
+    StartWarsDataResponse:
+      title: Start Wars Get - Success Response
+      type: object
+      properties:
+        success:
+          type: "boolean"
+          description: "Estado de la petición"
+          example: "true"
+        message:
+          type: "string"
+          description: "Mensaje de respuesta"
+          example: "Info de API swapi obtenida y traducida con éxito  "
+        data:
+          type: "object"
+          properties:
+            nombre:
+              type: string
+              description: "Nombre galaxia"
+              example: "Yavin IV"
+            periodo_rotacion:
+              type: string
+              description: "Periodo de rotación"
+              example: "24"
+            periodo_orbital:
+              type: string
+              description: "Periodo Orbital"
+              example: "4818"
+            diametro:
+              type: string
+              description: "Diámetro"
+              example: "10200"
+            clima:
+              type: string
+              description: "Clima"
+              example: "temperate, tropical"
+            gravedad:
+              type: string
+              description: "Gravedad"
+              example: "1 standard"
+            terreno:
+              type: string
+              description: "Terreno"
+              example: "jungle, rainforests"
+            agua_superficie:
+              type: string
+              description: "Superficie en Agua"
+              example: "8"
+            poblacion:
+              type: string
+              description: "Población"
+              example: "1000"
+            residentes:
+              type: array
+              items:
+                type: string
+                description: "Residentes"
+                example: "https://swapi.py4e.com/api/people/81/"
+            peliculas:
+              type: array
+              items:
+                type: string
+                description: "Peliculas"
+                example: "https://swapi.py4e.com/api/films/81/"
+            creado:
+              type: string
+              description: "Fecha de creación"
+              example: "2014-12-10T11:37:19.144000Z"
+            editado:
+              type: string
+              description: "Fecha de edición"
+              example: "2014-12-20T20:58:18.421000Z"
+            url:
+              type: string
+              description: "Url"
+              example: "https://swapi.py4e.com/api/planets/3/"
+
+    StartWarsBadRequestResponse:
+      title: Bad Response Get StartWars
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: "Estado de la petición"
+          example: "false"
+        message:
+          type: string
+          description: "Mensaje del error"
+          example: "Error al obtener info"
+info:
+  title: swapi
+  description: MicroServicio `swapi`.
+  version: 1.0.0
+  contact:
+    name: Jhon Oquendo
+    email: "jhonoquendovizcarra@gmail.com"
+paths:
+  /users:
+    get:
+      tags:
+        - "Users"
+      summary: "Obtener listado de usuarios"
+      description: "Obtener listado de usuarios"
+      operationId: "getUsers"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDataResponse"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersDatatBadRequestResponse"
+  /user:
+    post:
+      tags:
+        - "Users"
+      summary: "Crear usuario"
+      description: "Crear usuario"
+      operationId: "createUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateDataRequestBody'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCreateDataResponse"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCreateBadRequestResponse"
+
+  /starwars:
+    get:
+      tags:
+        - "StarWars"
+      summary: "Obtener un objeto de la API swapi, traducido"
+      description: "Obtener un objeto de la API swapi, traducido"
+      operationId: "getStarWars"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartWarsDataResponse"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartWarsBadRequestResponse"

@@ -1,0 +1,25 @@
+service: pil
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+  timeout: 30
+  environment:
+    STAGE: ${self:provider.stage}
+custom:
+  esbuild:
+    exclude: []
+  customVariable1: Hello, Pil!
+functions:
+  getHello:
+    handler: ./src/handler/GetHelloHandler.handler
+    events:
+      - http:
+          path: /api/hello
+          method: GET
+    environment:
+      CUSTOM_VAR: ${self:custom.customVariable1}
