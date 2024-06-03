@@ -8,6 +8,6 @@ export class HelloRepository implements HelloRepository {
 
     async getHello(): Promise<string> {
 
-        return 'Hello Repository';
+        return 'Hello Repository 1';
     }
 }

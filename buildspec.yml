@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install -g serverless
+      - npm install
+
+  build:
+    commands:
+      - serverless package
+
+artifacts:
+  files:
+    - .serverless/**/*
+
+cache:
+  paths:
+    - node_modules/**/*
+
